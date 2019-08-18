@@ -1,0 +1,9 @@
+{
+  "binary": ".direnv/python-3.7.3/bin/pyre.bin",
+  "source_directories": [
+    "."
+  ],
+  "ignore_all_errors": [".direnv"],
+  "search_path": ".direnv/python-3.7.3/lib/python3.7/site-packages",
+  "typeshed": ".direnv/python-3.7.3/lib/pyre_check/typeshed/"
+}
