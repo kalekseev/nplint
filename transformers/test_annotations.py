@@ -22,6 +22,25 @@ with input:
         print('test')
     def fbytes():
         return b'test'
+with output:
+    def f() -> str:
+        return 'x'
+    def ff() -> int:
+        return 'y'
+    def ffloat() -> float:
+        return 1.2
+    def fbool() -> bool:
+        return True
+    def fnone() -> None:
+        return None
+    def fnone2() -> None:
+        print('test')
+    def fbytes() -> bytes:
+        return b'test'
+"""
+
+testcase_no_return_annotations = """
+with input:
     def foptional(val):
         if val:
             return 'string'
@@ -39,20 +58,6 @@ with input:
             return 'string'
         print('test')
 with output:
-    def f() -> str:
-        return 'x'
-    def ff() -> int:
-        return 'y'
-    def ffloat() -> float:
-        return 1.2
-    def fbool() -> bool:
-        return True
-    def fnone() -> None:
-        return None
-    def fnone2() -> None:
-        print('test')
-    def fbytes() -> bytes:
-        return b'test'
     def foptional(val):
         if val:
             return 'string'
@@ -69,6 +74,15 @@ with output:
         if val:
             return 'string'
         print('test')
+"""
+
+testcase_yield_annotations = """
+with input:
+    def fyield():
+        yield None
+with output:
+    def fyield():
+        yield None
 """
 
 testcases = {n: v for n, v in locals().items() if n.startswith("testcase_")}

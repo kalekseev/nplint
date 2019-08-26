@@ -140,10 +140,26 @@ with input:
     sum([x ** 2 for x in range(10)])
     all([foo.bar for foo in foos])
     all((foo.bar for foo in foos))
+    sorted(
+        (
+            {
+                foo: 1
+            } for foo in foos
+        ),
+        key=lambda x: len(x)
+    )
 with output:
     sum(x ** 2 for x in range(10))
     all(foo.bar for foo in foos)
     all(foo.bar for foo in foos)
+    sorted(
+        (
+            {
+                foo: 1
+            } for foo in foos
+        ),
+        key=lambda x: len(x)
+    )
 """
 
 testcase_412 = """

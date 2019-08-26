@@ -103,12 +103,20 @@ class ComprehensionsTransformer(cst.CSTTransformer):
         if not node.args:
             return node
         value = node.args[0].value
-        if isinstance(value, (cst.ListComp, cst.GeneratorExp)):
+        if isinstance(value, cst.ListComp):
             pars: dict = {"lpar": [], "rpar": []} if len(node.args) == 1 else {}
             arg0 = node.args[0].with_changes(
                 value=cst.GeneratorExp(elt=value.elt, for_in=value.for_in, **pars)
             )
             return node.with_changes(args=(arg0, *node.args[1:]))
+        if isinstance(value, cst.GeneratorExp):
+            if len(node.args) == 1 and value.lpar:
+                arg0 = node.args[0].with_changes(
+                    value=cst.GeneratorExp(
+                        elt=value.elt, for_in=value.for_in, lpar=[], rpar=[]
+                    )
+                )
+                return node.with_changes(args=(arg0, *node.args[1:]))
         return node
 
     def leave_ComparisonTarget(self, node: cst.In, updated_node: cst.In) -> cst.In:

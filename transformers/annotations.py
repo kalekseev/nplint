@@ -66,3 +66,8 @@ class AnnotationsTransformer(cst.CSTTransformer):
         if returns is not None:
             returns.append(node)
         return False
+
+    def visit_Yield(self, node: cst.Return) -> Optional[bool]:
+        if self.stack:
+            self.stack[-1] = None
+        return False

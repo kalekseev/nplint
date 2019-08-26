@@ -3,6 +3,7 @@ import sys
 
 import libcst as cst
 
+from transformers.annotations import AnnotationsTransformer
 from transformers.asserts import AssertsTransformer
 from transformers.comprehension import ComprehensionsTransformer
 
@@ -16,6 +17,7 @@ if __name__ == "__main__":
     source_tree = cst.parse_module(source_text)
     modified_tree = source_tree.visit(ComprehensionsTransformer())
     modified_tree = modified_tree.visit(AssertsTransformer())
+    modified_tree = modified_tree.visit(AnnotationsTransformer())
     result_text = modified_tree.code
     if source_text != result_text:
         if INPLACE:
