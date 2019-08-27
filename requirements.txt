@@ -1,3 +1,4 @@
 pdbpp==0.10.0
 libcst==0.1
 pyre-check==0.0.30
+flake8==3.7.8

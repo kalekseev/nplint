@@ -16,12 +16,30 @@ with input:
         return 1.2
     def fbool():
         return True
+    def fbytes():
+        return b'test'
     def fnone():
         return None
     def fnone2():
         print('test')
-    def fbytes():
-        return b'test'
+    def fnone3(x):
+        if x:
+            return
+        print('test')
+    def fnone4():
+        if a:
+            return
+        if b:
+            c()
+    def fnone5():
+        if a:
+            return
+        if b:
+            return None
+    def fnone6():
+        if a:
+            return
+        return None
 with output:
     def f() -> str:
         return 'x'
@@ -31,12 +49,30 @@ with output:
         return 1.2
     def fbool() -> bool:
         return True
+    def fbytes() -> bytes:
+        return b'test'
     def fnone() -> None:
         return None
     def fnone2() -> None:
         print('test')
-    def fbytes() -> bytes:
-        return b'test'
+    def fnone3(x) -> None:
+        if x:
+            return
+        print('test')
+    def fnone4() -> None:
+        if a:
+            return
+        if b:
+            c()
+    def fnone5() -> None:
+        if a:
+            return
+        if b:
+            return None
+    def fnone6() -> None:
+        if a:
+            return
+        return None
 """
 
 testcase_no_return_annotations = """
@@ -57,6 +93,10 @@ with input:
         if val:
             return 'string'
         print('test')
+    def fcall():
+        if a:
+            return
+        return fother()
 with output:
     def foptional(val):
         if val:
@@ -74,6 +114,10 @@ with output:
         if val:
             return 'string'
         print('test')
+    def fcall():
+        if a:
+            return
+        return fother()
 """
 
 testcase_yield_annotations = """

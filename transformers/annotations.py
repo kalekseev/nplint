@@ -25,8 +25,16 @@ class AnnotationsTransformer(cst.CSTTransformer):
             )
         last_line = node.body.body[-1]
         if not isinstance(last_line, cst.SimpleStatementLine):
+            if returns and all(r.value is None or isinstance(r.value, cst.Name) and r.value.value == 'None' for r in returns):
+                return updated_node.with_changes(
+                    returns=cst.Annotation(annotation=cst.Name(value="None"))
+                )
             return updated_node
         elif not isinstance(last_line.body[-1], cst.Return):
+            if returns and all(r.value is None or isinstance(r.value, cst.Name) and r.value.value == 'None' for r in returns):
+                return updated_node.with_changes(
+                    returns=cst.Annotation(annotation=cst.Name(value="None"))
+                )
             return updated_node
         if len(returns) == 1:
             rvalue = returns[0].value
@@ -57,6 +65,10 @@ class AnnotationsTransformer(cst.CSTTransformer):
                 return updated_node.with_changes(
                     returns=cst.Annotation(annotation=cst.Name(value="float"))
                 )
+        elif returns and all(r.value is None or isinstance(r.value, cst.Name) and r.value.value == 'None' for r in returns):
+            return updated_node.with_changes(
+                returns=cst.Annotation(annotation=cst.Name(value="None"))
+            )
         return updated_node
 
     def visit_Return(self, node: cst.Return) -> Optional[bool]:
